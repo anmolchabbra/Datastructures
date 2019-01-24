@@ -4,27 +4,43 @@ class MatchingBrackets {
 
     public static void main(String[] args) {
         //char
-        String string = "hey..add(2+5) and multiply [3*5]] and divide the results{[/}}}";
+        String string = "{]}";
 
         Stack<Character> stack = new Stack<Character>();
-        for (int i = 0; i <= string.length() - 1; i++) {
-            char currentc = string.charAt(i);
-            if(currentc == '{' || currentc == '[') {
-                stack.push(currentc);
+            int i=0;
+            for (; i <= string.length() - 1; i++) {
+                char currentc = string.charAt(i);
+                if (currentc == '{' || currentc == '[') {
+                    stack.push(currentc);
+
+                } else {
+                        if (currentc == '}' || currentc == ']') {
+                            if (stack.empty()) {
+                                System.out.println("false \t" +  (i+1));
+                                System.exit(0);
+
+                            } else {
+                                char topElement = stack.peek();
+                                if ((topElement == '{' && currentc != '}' || topElement == '[' && currentc != ']')) {
+                                    break;
+                                } else {
+                                    stack.pop();
+                                }
+                            }
+                        }
+                }
+            }
+            if(stack.empty()) {
+            System.out.println("balanced");
             }
             else {
-                char topElement = stack.peek();
-                if ((topElement == '{' &&  currentc == '}') || (topElement == '[' && currentc !=']')) {
+                System.out.println("not balanced \t" + (i+1) );
 
-                    System.out.println("it is not balanced");
-                }
-              else{
-                    System.out.println("String is not balanced");
-                }
             }
-        }
     }
 }
+
+
         /*
 public class MatchingBrackets {
     int[] MatchingBrackets  = new int[70];
