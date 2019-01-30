@@ -22,21 +22,20 @@ class MatchingBrackets {
                     if (topElement == matchingbracket) {
                         stack.pop();
                     } else {
-                        return i + 1 ;
+                        return i + 1;
                     }
-                    index = (string.indexOf(topElement));
                 }
             }
         }
-
         if (stack.empty()) {
             return -1;
         } else {
-           return index;
+            i = (string.lastIndexOf(stack.peek()) + 1);
+           return i;
         }
     }
     public static void main(String[] args) {
-        String string = "foo({}";
+        String string = "foo[][]";
         MatchingBrackets matcher = new MatchingBrackets();
         int s = matcher.balanced(string);
         if (s == -1) {

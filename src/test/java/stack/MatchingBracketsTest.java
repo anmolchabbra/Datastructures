@@ -72,6 +72,12 @@ public class MatchingBracketsTest {
     public void negativeTestCase3() {
         String string = "foo({{}[]}";
         MatchingBrackets matcher = new MatchingBrackets();
-        assertEquals(10, matcher.balanced(string));
+        assertEquals(4, matcher.balanced(string));
+    }
+    @org.junit.Test
+    public void negativeTestCase4() {
+        String string = "foo{}{";
+        MatchingBrackets matcher = new MatchingBrackets();
+        assertEquals(6, matcher.balanced(string));
     }
 }
