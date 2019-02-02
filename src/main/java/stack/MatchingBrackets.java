@@ -1,16 +1,27 @@
 package stack;
 
 import java.util.Stack;
-import java.lang.String;
 
-
+/**
+ * This Class checks that string is whether balanced or unbalanced,
+ * iff unbalanced it gives 1-based index of unmatched bracket.
+*/
 class MatchingBrackets {
-
-    public int balanced(String string) {
+    /**
+     * This method is used to check whether string is balanced or not,
+     * If the string is balanced then it returns -1 and if it is not balanced
+     * then it output the 1-based index of the first unmatched closing bracket,
+     * and if there are no unmatched closing brackets,
+     * output the 1-based index of the first unmatched opening bracket.
+     * @param string placeholder.
+     * @return placeholder.
+     */
+    public int balanced(final String string) {
+        // using stack to check parenthesis
         Stack<Character> stack = new Stack<Character>();
         Stack<Integer> stack1 = new Stack<Integer>();
         int i = 0;
-        for ( ; i < string.length(); i++ ) {
+        for ( ; i < string.length(); i++) {
             char currentc = string.charAt(i);
             if ((currentc == '{') || (currentc == '[') || (currentc == '(')) {
                 stack.push(currentc);
@@ -19,7 +30,14 @@ class MatchingBrackets {
                 if (stack.empty()) {
                     return i + 1;
                 } else {
-                    char matchingbracket = (currentc == '}' ? '{' : currentc == ']' ? '[' : '(');
+                    char matchingbracket;
+                    if (currentc == '}') {
+                        matchingbracket = '{';
+                    } else if (currentc == ']') {
+                        matchingbracket = '[';
+                    } else {
+                        matchingbracket = '(';
+                    }
                     char topElement = stack.peek();
                     if (topElement == matchingbracket) {
                         stack.pop();
@@ -33,11 +51,16 @@ class MatchingBrackets {
         if (stack.isEmpty() && stack1.isEmpty()) {
             return -1;
         } else {
-            i = (stack1.peek()+ 1);
+            i = (stack1.peek() + 1);
            return i;
         }
     }
-    public static void main(String[] args) {
+
+    /**
+     * main method.
+     * @param args arguments.
+     */
+    public static void main(final String[] args) {
         String string = "foo{}{";
         MatchingBrackets matcher = new MatchingBrackets();
         int s = matcher.balanced(string);
