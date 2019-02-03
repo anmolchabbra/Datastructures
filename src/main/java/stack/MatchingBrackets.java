@@ -13,19 +13,16 @@ class MatchingBrackets {
      * then it output the 1-based index of the first unmatched closing bracket,
      * and if there are no unmatched closing brackets,
      * output the 1-based index of the first unmatched opening bracket.
-     * @param string placeholder.
-     * @return placeholder.
+     * @param string String that has to be tested for balanced brackets.
+     * @return an integer as described above.
      */
     public int balanced(final String string) {
         // using stack to check parenthesis
-        Stack<Character> stack = new Stack<Character>();
-        Stack<Integer> stack1 = new Stack<Integer>();
-        int i = 0;
-        for ( ; i < string.length(); i++) {
+        Stack<OpeningBracketAndIndex> stack = new Stack<>();
+        for (int i = 0 ; i < string.length(); i++) {
             char currentc = string.charAt(i);
             if ((currentc == '{') || (currentc == '[') || (currentc == '(')) {
-                stack.push(currentc);
-                stack1.push(i);
+                stack.push(new OpeningBracketAndIndex(currentc, i));
             } else if (currentc == '}' || currentc == ']' || currentc == ')') {
                 if (stack.empty()) {
                     return i + 1;
@@ -38,26 +35,34 @@ class MatchingBrackets {
                     } else {
                         matchingbracket = '(';
                     }
-                    char topElement = stack.peek();
-                    if (topElement == matchingbracket) {
+                    OpeningBracketAndIndex topElement = stack.peek();
+                    if (topElement.openingBracket == matchingbracket) {
                         stack.pop();
-                        stack1.pop();
                     } else {
                         return i + 1;
                     }
                 }
             }
         }
-        if (stack.isEmpty() && stack1.isEmpty()) {
+        if (stack.isEmpty()) {
             return -1;
         } else {
-            i = (stack1.peek() + 1);
-           return i;
+           return stack.peek().index + 1;
+        }
+    }
+
+    private static class OpeningBracketAndIndex {
+        char openingBracket;
+        int index;
+
+        OpeningBracketAndIndex(char openingBracket, int index) {
+            this.openingBracket = openingBracket;
+            this.index = index;
         }
     }
 
     /**
-     * main method.
+     * Main method for simple testing. Other tests in MatchingBracketsTest
      * @param args arguments.
      */
     public static void main(final String[] args) {
